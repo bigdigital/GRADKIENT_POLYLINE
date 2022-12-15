@@ -5,14 +5,14 @@ Page({
     build() {
         logger.debug('page build invoked')
 
-        //Example 1
-        //issue: The widget output buffer is stripped  see https://i.imgur.com/1PnVyGi.png
+        //Example 2
+        //issue: If create two widgets, the second widget will clear the output from first, see https://i.imgur.com/P9h0eO6.png
 
         const Colors = {
             white: 0xffffff,
             black: 0x000000,
             red: 0xffa0a0,
-            bgLow: 0x8bbbff
+            blue: 0x8bbbff
         };
 
         let bg = hmUI.createWidget(hmUI.widget.FILL_RECT, {
@@ -24,16 +24,20 @@ Page({
         });
 
         let lineDataList = [
-            {x: 0, y: 120},
-            {x: 480, y: 120},
-            {x: 0, y: 200}
+            {x: 0, y: 50},
+            {x: 480, y: 50},
+        ];
+
+        let lineDataList2 = [
+            {x: 0, y: 100},
+            {x: 480, y: 100},
         ];
 
         const polyline = hmUI.createWidget(hmUI.widget.GRADKIENT_POLYLINE, {
             x: 0,
             y: 0,
             w: DEVICE_WIDTH,
-            h: DEVICE_HEIGHT,
+            h: 100,
             line_color: Colors.red,
             line_width: 4
         })
@@ -41,6 +45,20 @@ Page({
         polyline.addLine({
             data: lineDataList,
             count: lineDataList.length
+        })
+
+        const polyline2 = hmUI.createWidget(hmUI.widget.GRADKIENT_POLYLINE, {
+            x: 0,
+            y: 0,
+            w: DEVICE_WIDTH,
+            h: 100,
+            line_color: Colors.blue,
+            line_width: 4
+        })
+        polyline2.clear()
+        polyline2.addLine({
+            data: lineDataList2,
+            count: lineDataList2.length
         })
     },
     onInit() {
